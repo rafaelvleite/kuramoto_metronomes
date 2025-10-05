@@ -2,13 +2,11 @@
 # Core dependencies for the simulation
 
 # Graphics and visualization
-pygame>=2.0.0
+pygame
 
 # Numerical computations
-numpy>=1.20.0
+numpy
 
 # Video export and encoding
-imageio[ffmpeg]>=2.9.0
-
-# Optional: For better performance with large arrays
-# scipy>=1.7.0
+imageio
+imageio-ffmpeg
