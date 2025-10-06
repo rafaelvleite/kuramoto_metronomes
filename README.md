@@ -1,173 +1,256 @@
 # Kuramoto Metronomes Synchronization
 
-A visual simulation demonstrating the **Kuramoto synchronization phenomenon** using metronomes with realistic pendulum physics and spatial coupling.
+A stunning visual simulation demonstrating the **Kuramoto synchronization phenomenon** using metronomes with realistic pendulum physics, spatial clustering, and beautiful audiovisual presentation.
 
-![Metronomes Sync Demo](metronomes_sync_english.mp4)
+![Metronomes Sync Demo](kuramoto_metronomes_complete.mp4)
 
-## Overview
+## 🎯 What You'll See
 
-This experiment simulates multiple independent metronomes placed on a fixed table, each starting at slightly different times and phases. Through weak spatial coupling based on the **Kuramoto model**, the metronomes gradually synchronize their oscillations, creating a beautiful demonstration of emergent collective behavior.
+Watch **36 metronomes** start chaotically, then gradually find their rhythm through the invisible force of synchronization. This isn't just a simulation—it's a window into one of nature's most beautiful mathematical phenomena.
+
+## 🎵 Complete Experience
+
+This project includes:
+- **🎬 Professional video production** with intro/outro
+- **🎵 Original soundtrack** ("Synchronized Hearts" - harmonic ambient music)
+- **📚 Educational narration** in Portuguese and English
+- **🎨 Pastel cluster visualization** showing synchronization groups
+- **📊 Real-time physics analysis** with coupling parameters
+
+## 🔬 The Science
 
 ### What is Kuramoto Synchronization?
 
-In the 1970s, Japanese physicist **Yoshiki Kuramoto** described how oscillators can spontaneously synchronize through weak coupling. This phenomenon explains everything from fireflies flashing in unison to the coordinated beating of heart cells.
+In the 1970s, Japanese physicist **Yoshiki Kuramoto** discovered how independent oscillators can spontaneously synchronize through weak coupling. This phenomenon explains:
 
-## Features
+- 🔥 **Fireflies** flashing in perfect unison
+- ❤️ **Heart cells** beating together
+- 🧠 **Brain waves** coordinating thought
+- 🌉 **Bridge oscillations** from pedestrian walking
+- ⚡ **Power grids** maintaining frequency
 
-- **90 metronomes** arranged in a 3-row grid
-- **Realistic pendulum physics** with ±22° swing amplitude
-- **Spatial coupling** - closer metronomes influence each other more strongly
-- **Staggered start times** to show the synchronization process
-- **Real-time visualization** with order parameter tracking
-- **Educational narration** explaining the physics
-- **High-quality MP4 export** for presentations and sharing
+### Our Implementation
 
-## Physics Parameters
+- **36 metronomes** in a 3×12 grid formation
+- **Spatial coupling** - closer metronomes influence each other more
+- **Phase clustering** - metronomes form synchronized groups by color
+- **Time-ramped coupling** - synchronization emerges gradually around 40 seconds
+- **Hysteresis anti-flicker** - stable color assignments
+
+## ⚙️ Technical Specifications
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| `N` | 90 | Number of metronomes |
-| `K0` | 1.5 | Base coupling strength |
-| `LAMBDA` | 200px | Spatial coupling range |
-| `OMEGA_MEAN_HZ` | 1.1 Hz | Natural frequency (~66 BPM) |
-| `ALPHA_MAX` | 22° | Maximum swing angle |
+| **Metronomes** | 36 | Arranged in 3×12 grid |
+| **Duration** | 46s main + 14s intro/outro = 60s total | Perfect 1-minute video |
+| **Coupling Range** | 160px | Spatial influence radius |
+| **Natural Frequency** | 1.1 Hz (~66 BPM) | Human-like heartbeat rhythm |
+| **Max Swing** | ±22° | Realistic pendulum physics |
+| **Coupling Growth** | K: 0.16 → 1.60 | Gradual synchronization |
+| **Target Sync** | ~40 seconds | When global lock occurs |
+| **Video Quality** | 1280×720, 30fps | HD ready for sharing |
 
-## Installation
+## 🚀 Quick Start
 
-### Requirements
+### Prerequisites
 
 ```bash
 pip install pygame numpy imageio[ffmpeg]
 ```
 
-### Dependencies
+### Generate the Complete Experience
 
-- **Python 3.7+**
-- **pygame** - for real-time visualization and rendering
-- **numpy** - for efficient numerical computations
-- **imageio** - for MP4 video export
-- **ffmpeg** - for video encoding (installed automatically with imageio[ffmpeg])
-
-## Usage
-
-Simply run the simulation:
-
+1. **Create the base animation:**
 ```bash
 python main.py
 ```
+*Generates: `metronomes_sync_46s_lock40_pastel_spatial_phase.mp4`*
 
-The program will:
-1. Display a real-time visualization window
-2. Show educational narration explaining the physics
-3. Export a clean MP4 video (`metronomes_sync_english.mp4`)
+2. **Generate the soundtrack:**
+```bash
+python generate_harmonic_music.py
+```
+*Creates: `synchronized_hearts.wav` (60-second harmonic ambient music)*
 
-### Output
+3. **Produce the final video:**
+```bash
+python combine_video_audio.py
+```
+*Outputs: `kuramoto_metronomes_complete.mp4` (final 60-second masterpiece)*
 
-The simulation generates a 25-second MP4 video showing:
-- Individual metronomes starting at different times
-- Gradual phase alignment through coupling
-- Final synchronized state
-- Real-time order parameter (synchronization measure)
+## 🎨 Visual Features
 
-## Understanding the Visualization
+### Color-Coded Synchronization
+- **🎨 Pastel clusters** - Groups of synchronized metronomes share beautiful colors
+- **⚪ Neutral gray** - Independent metronomes not yet synchronized  
+- **💚 Global lock** - All metronomes turn soft green when fully synchronized
+- **🔄 Hysteresis** - Stable color assignments prevent flickering
 
-### Visual Elements
+### Professional Video Structure
+- **🎬 4s Intro** - Elegant title sequence
+- **🎯 46s Main** - Full synchronization demonstration
+- **⏸️ 2s Pause** - Hold on the beautiful final synchronized state
+- **🎭 8s Outro** - Complete credits and attribution
 
-- **Blue circles**: Active metronome bobs
-- **Gray circles**: Inactive metronomes (not yet started)
-- **White lines**: Pendulum rods
-- **HUD display**: Shows coupling parameters and order parameter
+### Real-Time Analytics
+- **📊 Order parameter `r`** - Measures global synchronization (0 = chaos, 1 = perfect sync)
+- **📈 Coupling strength `K(t)`** - Shows how interaction strength grows over time
+- **🔢 Local groups** - Count of synchronized clusters
+- **⏱️ Time tracking** - Current simulation time
 
-### Order Parameter
+## 🎵 Audio Experience
 
-The **order parameter** `r` measures synchronization:
-- `r ≈ 0`: Complete disorder (random phases)
-- `r ≈ 1`: Perfect synchronization (all in phase)
+The included **"Synchronized Hearts"** soundtrack features:
+- **💓 Gentle heartbeat bass** - Representing the fundamental rhythm of life
+- **🎼 Pure harmonic chords** - Mathematical beauty in C Major pentatonic
+- **🎵 Contemplative melody** - Tells the story of finding harmony together
+- **✨ Atmospheric resonance** - Subtle textures that breathe with the visuals
 
-Watch as `r` grows from ~0 to ~1 during the simulation!
+*Theme: The magical moment when separate rhythms become one*
 
-## Customization
+## 🔧 Customization
 
-You can modify various parameters in `main.py`:
+### Key Parameters in `main.py`
 
 ```python
-# Number and layout
-N = 90              # Number of metronomes
-ROWS = 3            # Grid rows
+# System size
+N = 36                  # Number of metronomes
+ROWS = 3               # Grid layout
 
-# Physics
-K0 = 1.5            # Coupling strength (higher = faster sync)
-LAMBDA = 200.0      # Spatial range (pixels)
-OMEGA_MEAN_HZ = 1.1 # Base frequency
+# Physics timing  
+DURATION_S = 46.0      # Simulation length
+T_LOCK_TARGET = 40.0   # When synchronization peaks
 
-# Timing
-DURATION_S = 25.0   # Video duration
-SPREAD_START_SEC = 6.0  # Stagger start times
+# Coupling dynamics
+K_START = 0.16         # Initial coupling (subcritical)
+K_END = 1.60          # Final coupling (supercritical) 
+LAMBDA = 160.0        # Spatial coupling range (pixels)
+
+# Clustering parameters
+NEIGH_RADIUS_PX = 140     # Neighbor detection radius
+PHASE_THRESH_RAD = 0.65   # Phase similarity threshold
+MIN_CLUSTER_SIZE = 3      # Minimum group size
 ```
 
-## The Mathematics
+### Music Customization in `generate_harmonic_music.py`
 
-The simulation implements the **Kuramoto model** with spatial coupling:
+```python
+# Musical parameters
+BPM = 72                    # Calm, heart-rate tempo
+C_MAJOR_PENTATONIC = {...} # Pure, harmonic scale
+HEART_MELODY = [...]       # "Synchronized Hearts" theme
+```
+
+## 🧮 The Mathematics
+
+### Kuramoto Model with Spatial Coupling
 
 ```
-dθᵢ/dt = ωᵢ + Σⱼ Kᵢⱼ sin(θⱼ - θᵢ)
+dθᵢ/dt = ωᵢ + K(t) Σⱼ Wᵢⱼ sin(θⱼ - θᵢ) + ηᵢ(t)
 ```
 
-Where:
+**Where:**
 - `θᵢ` = phase of metronome i
 - `ωᵢ` = natural frequency of metronome i  
-- `Kᵢⱼ` = coupling strength between metronomes i and j
-- Coupling strength decreases exponentially with distance
+- `K(t)` = time-varying coupling strength
+- `Wᵢⱼ` = spatial weight matrix (exponential decay)
+- `ηᵢ(t)` = small phase noise for realism
 
-## Educational Applications
+### Clustering Algorithm
 
-This simulation is perfect for:
-- **Physics courses** - demonstrating collective behavior
-- **Complex systems** - showing emergence and self-organization
-- **Mathematics** - visualizing coupled oscillator dynamics
-- **Presentations** - clean MP4 export ready for talks
+```
+1. Find spatial neighbors: |rᵢ - rⱼ| < NEIGH_RADIUS_PX
+2. Check phase similarity: |θᵢ - θⱼ| < PHASE_THRESH_RAD  
+3. Union-find clustering of aligned neighbors
+4. Validate cluster coherence: r_cluster > R_CLUSTER
+5. Apply hysteresis for stable visualization
+```
 
-## Real-World Examples
+## 📚 Educational Applications
 
-Kuramoto synchronization appears in:
-- 🔥 **Fireflies** flashing in unison
-- ❤️ **Cardiac pacemaker cells** coordinating heartbeats
-- 🧠 **Neural networks** in the brain
-- 🌉 **Pedestrians** walking across bridges
-- ⚡ **Power grid** frequency synchronization
+Perfect for teaching:
+- **🔬 Physics** - Collective behavior and emergent phenomena
+- **🧮 Mathematics** - Differential equations and phase dynamics  
+- **💻 Complex Systems** - Self-organization and critical transitions
+- **🎵 Music Theory** - Harmony, rhythm, and mathematical beauty
+- **🎬 Media Production** - Scientific visualization and storytelling
 
-## Technical Details
+### Lesson Plan Ideas
+1. **Phase 1**: Show chaos → order transition
+2. **Phase 2**: Explain spatial coupling mechanism  
+3. **Phase 3**: Connect to real-world examples
+4. **Phase 4**: Explore parameter effects
+5. **Phase 5**: Discuss mathematical foundations
 
-### Performance
-- **Deterministic rendering** ensures reproducible videos
-- **Substep physics** (4 substeps per frame) for stability
-- **Efficient spatial coupling** using pre-computed weight matrices
-- **30 FPS export** with smooth animations
+## 🌍 Real-World Phenomena
 
-### Coordinate System
-- Metronomes arranged in a regular grid
-- Spatial coupling uses Euclidean distance
-- Pendulum physics with realistic small-angle approximation
+Kuramoto synchronization appears everywhere:
 
-## License
+| System | Description | Sync Mechanism |
+|--------|-------------|----------------|
+| 🔥 **Fireflies** | Flash coordination in Southeast Asia | Visual coupling |
+| ❤️ **Heart** | Pacemaker cells beating together | Electrical coupling |
+| 🧠 **Brain** | Neural oscillations during sleep | Chemical synapses |
+| 🌉 **Bridges** | Millennium Bridge wobble (London) | Mechanical coupling |
+| ⚡ **Power Grid** | Frequency synchronization | Electrical grid |
+| 🚶 **Crowds** | Pedestrian step coordination | Visual/tactile cues |
+| 🦗 **Crickets** | Chirping in unison | Acoustic coupling |
 
-This project is open source. Feel free to use, modify, and share for educational purposes.
+## 🎯 Project Structure
 
-## References
+```
+kuramoto_metronomes/
+├── main.py                           # Core simulation engine
+├── generate_harmonic_music.py        # "Synchronized Hearts" soundtrack
+├── combine_video_audio.py            # Professional video production
+├── requirements.txt                  # Dependencies
+├── README.md                         # This documentation
+└── Output files:
+    ├── metronomes_sync_46s_lock40_pastel_spatial_phase.mp4
+    ├── synchronized_hearts.wav  
+    └── kuramoto_metronomes_complete.mp4  # Final masterpiece
+```
 
-- Kuramoto, Y. (1984). *Chemical Oscillations, Waves, and Turbulence*
-- Strogatz, S. H. (2000). *From Kuramoto to Crawford: exploring the onset of synchronization in populations of coupled oscillators*
-- Acebrón, J. A., et al. (2005). *The Kuramoto model: A simple paradigm for synchronization phenomena*
+## 🏆 Key Features
 
-## Contributing
+✅ **Scientifically accurate** - Real Kuramoto model implementation  
+✅ **Visually stunning** - Pastel clusters and smooth animations  
+✅ **Educational** - Narration in Portuguese and English  
+✅ **Professional quality** - HD video with original soundtrack  
+✅ **Customizable** - Extensive parameter control  
+✅ **Reproducible** - Deterministic rendering  
+✅ **Open source** - MIT license for education  
 
-Contributions welcome! Ideas for improvements:
-- Interactive parameter controls
-- Different coupling topologies  
-- 3D visualization
-- Audio synchronization
-- Comparison with real metronome experiments
+## 🤝 Contributing
+
+We welcome contributions! Ideas for improvements:
+- 🌐 **Multi-language** narration support
+- 🎮 **Interactive controls** for real-time parameter adjustment
+- 📱 **Mobile version** for tablets and phones  
+- 🔊 **Audio synchronization** with actual metronome sounds
+- 📊 **Statistical analysis** tools for researchers
+- 🎨 **Visualization modes** (3D, VR, different color schemes)
+
+## 📖 References & Inspiration
+
+- **Kuramoto, Y.** (1984). *Chemical Oscillations, Waves, and Turbulence*
+- **Strogatz, S. H.** (2000). *From Kuramoto to Crawford: exploring the onset of synchronization*  
+- **Acebrón, J. A., et al.** (2005). *The Kuramoto model: A simple paradigm for synchronization phenomena*
+- **Mark Rober** - Inspiring metronome synchronization demonstration
+- **3Blue1Brown** - Mathematical visualization excellence
+
+## 📄 License
+
+MIT License - Use freely for education, research, and inspiration.
+
+## 🎬 Credits
+
+- **Visualization & Physics**: Rafael Vicente Leite
+- **Music Composition**: "Synchronized Hearts" original soundtrack  
+- **Inspired by**: Mark Rober's metronome synchronization video
+- **Based on**: Kuramoto model of coupled oscillators
+- **Repository**: https://github.com/rafaelvleite/kuramoto_metronomes
 
 ---
 
-*Created with ❤️ for science education and the beauty of emergent phenomena*
+*✨ Created with passion for the beauty of mathematics and the poetry of synchronization ✨*
