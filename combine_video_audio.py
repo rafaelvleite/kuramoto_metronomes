@@ -1,8 +1,13 @@
 # combine_video_audio.py
-# Complete video production pipeline:
+# Complete video production pipeline with multi-language support:
 # 1. Combines the Kuramoto metronomes video with the mystic ambient music
 # 2. Adds professional intro and outro sections
 # 3. Creates a final audiovisual experience ready for sharing
+# 
+# Language Support:
+# - Change LANGUAGE variable to "en" for English or "pt" for Portuguese
+# - All intro/outro texts will automatically switch languages
+# - Output filename includes language code (e.g., kuramoto_metronomes_complete_pt.mp4)
 
 import subprocess
 import os
@@ -13,7 +18,10 @@ from pathlib import Path
 VIDEO_FILE = "metronomes_sync_46s_lock40_pastel_spatial_phase.mp4"
 AUDIO_FILE = "synchronized_hearts.wav"
 TEMP_VIDEO_WITH_AUDIO = "temp_video_with_audio.mp4"
-FINAL_OUTPUT = "kuramoto_metronomes_complete.mp4"
+
+# Language settings
+LANGUAGE = "en"  # "en" for English, "pt" for Portuguese
+FINAL_OUTPUT = f"kuramoto_metronomes_complete_{LANGUAGE}.mp4"
 
 # Video settings
 VIDEO_WIDTH = 1280
@@ -30,15 +38,30 @@ BG_COLOR = "0a0e16"     # Dark navy (hex)
 TEXT_COLOR = "ecf6ff"   # Light text
 ACCENT_COLOR = "00ccff" # Cyan accent
 
-# Text content
-INTRO_TITLE = "Kuramoto Synchronization"
-INTRO_SUBTITLE = "The Mathematics of Emergent Harmony"
-INTRO_CREDIT = "Visualization by Rafael Vicente Leite"
+# Text content by language
+TEXTS = {
+    "en": {
+        "intro_title": "Kuramoto Synchronization",
+        "intro_subtitle": "The Mathematics of Emergent Harmony",
+        "intro_credit": "Visualization by Rafael Vicente Leite",
+        "outro_title": "Thank You for Watching",
+        "outro_subtitle": "Visualization by Rafael Vicente Leite",
+        "outro_footer": "Inspired by Mark Rober • Based on Kuramoto Model • Music: 'Synchronized Hearts'",
+        "outro_github": "github.com/rafaelvleite/kuramoto_metronomes"
+    },
+    "pt": {
+        "intro_title": "Sincronização de Kuramoto",
+        "intro_subtitle": "A Matemática da Harmonia Emergente",
+        "intro_credit": "Visualização por Rafael Vicente Leite",
+        "outro_title": "Obrigado por Assistir",
+        "outro_subtitle": "Visualização por Rafael Vicente Leite",
+        "outro_footer": "Inspirado em Mark Rober • Baseado no Modelo de Kuramoto • Música: 'Synchronized Hearts'",
+        "outro_github": "github.com/rafaelvleite/kuramoto_metronomes"
+    }
+}
 
-OUTRO_TITLE = "Thank You for Watching"
-OUTRO_SUBTITLE = "Visualization by Rafael Vicente Leite"
-OUTRO_FOOTER = "Inspired by Mark Rober • Based on Kuramoto Model • Music: 'Synchronized Hearts'"
-OUTRO_GITHUB = "github.com/rafaelvleite/kuramoto_metronomes"
+# Get current language texts
+CURRENT_TEXTS = TEXTS[LANGUAGE]
 
 # Audio settings
 SAMPLE_RATE = 44100        # For audio looping calculations
@@ -113,15 +136,15 @@ def create_intro():
     # Create temporary text files to avoid escaping issues
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         title_file = f.name
-        f.write(INTRO_TITLE)
+        f.write(CURRENT_TEXTS["intro_title"])
     
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         subtitle_file = f.name
-        f.write(INTRO_SUBTITLE)
+        f.write(CURRENT_TEXTS["intro_subtitle"])
     
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         credit_file = f.name
-        f.write(INTRO_CREDIT)
+        f.write(CURRENT_TEXTS["intro_credit"])
     
     try:
         # Use textfile option to avoid escaping issues
@@ -203,19 +226,19 @@ def create_outro():
     # Create temporary text files to avoid escaping issues
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         title_file = f.name
-        f.write(OUTRO_TITLE)
+        f.write(CURRENT_TEXTS["outro_title"])
     
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         subtitle_file = f.name
-        f.write(OUTRO_SUBTITLE)
+        f.write(CURRENT_TEXTS["outro_subtitle"])
     
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         footer_file = f.name
-        f.write(OUTRO_FOOTER)
+        f.write(CURRENT_TEXTS["outro_footer"])
     
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         github_file = f.name
-        f.write(OUTRO_GITHUB)
+        f.write(CURRENT_TEXTS["outro_github"])
     
     try:
         # Use textfile option to avoid escaping issues
@@ -420,6 +443,9 @@ def main():
     """Main execution flow"""
     print("🎵🎬 Kuramoto Metronomes - Complete Video Production")
     print("=" * 60)
+    print(f"🌐 Language: {LANGUAGE.upper()} ({'Portuguese' if LANGUAGE == 'pt' else 'English'})")
+    print(f"📁 Output: {FINAL_OUTPUT}")
+    print()
     
     # Check if we have everything we need
     if not check_dependencies():

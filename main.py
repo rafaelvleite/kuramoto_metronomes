@@ -86,19 +86,16 @@ MIN_CLUSTER_SIZE = 3           # ignore tiny groups
 # ========= Hysteresis (anti-flicker) =========
 CLUSTER_HYST_SEC = 1.2         # color persistence
 
-# ========= Captions (EN) =========
-# (t_in, t_out, text)
-NARRA = [
-    (0.0,   7.0,  "No início, cada metrônomo se move sozinho — como nós, cada um em seu próprio ritmo."),
-    (7.0,   14.0, "Com objetivos, crenças e começos diferentes. Às vezes, parece que nos movemos uns contra os outros."),
-    (14.0,  22.0, "Mas conexões sutis — empatia, cooperação, propósito comum — começam a surgir."),
-    (22.0,  30.0, "Isso reflete o que o físico japonês Yoshiki Kuramoto mostrou: sistemas podem se auto-sincronizar."),
-    (30.0,  36.0, "Quando nos alinhamos, menos energia se perde. O conflito se dissolve. A harmonia é mais eficiente."),
-    (36.0,  41.5, "Imagine a humanidade aprendendo essa lição — sem guerras, sem desperdício de energia."),
-    (41.5,  46.0, "Apenas equilíbrio, ritmo compartilhado e paz — o estado natural de um mundo conectado.")
-]
+# ========= Captions & Titles =========
+LANG = "en"  # "en" or "pt"
 
-NARRA = [
+# Simple titles for HUD
+TITLES = {
+    "en": "Harmony and a Much Better World",
+    "pt": "Harmonia e um Mundo Bem Melhor"
+}
+
+NARRA_EN = [
     (0.0,   7.0,  "At first, every metronome moves alone — just like us, each following their own rhythm."),
     (7.0,   14.0, "Different goals, beliefs, and starts. Sometimes, it feels like we’re moving against one another."),
     (14.0,  22.0, "But subtle connections — empathy, cooperation, shared purpose — start to emerge."),
@@ -108,13 +105,25 @@ NARRA = [
     (41.5,  46.0, "Just balance, shared rhythm, and peace — the natural state of a connected world.")
 ]
 
+NARRA_PT = [
+    (0.0,   7.0,  "No início, cada metrônomo se move sozinho — como nós, cada um em seu próprio ritmo."),
+    (7.0,   14.0, "Com objetivos, crenças e começos diferentes. Às vezes, parece que nos movemos uns contra os outros."),
+    (14.0,  22.0, "Mas conexões sutis — empatia, cooperação, propósito comum — começam a surgir."),
+    (22.0,  30.0, "Isso reflete o que o físico japonês Yoshiki Kuramoto mostrou: sistemas podem se auto-sincronizar."),
+    (30.0,  36.0, "Quando nos alinhamos, menos energia se perde. O conflito se dissolve. A harmonia é mais eficiente."),
+    (36.0,  41.5, "Imagine a humanidade aprendendo essa lição — sem guerras, sem desperdício de energia."),
+    (41.5,  46.0, "Apenas equilíbrio, ritmo compartilhado e paz — o estado natural de um mundo conectado.")
+]
+
+NARRA = NARRA_PT if LANG == "pt" else NARRA_EN
+
 TYPE_CPS = 22  # typewriter speed (chars/sec)
 
 # ========= Layout =========
 def grid_positions(n=N, rows=ROWS):
     cols = (n + rows - 1) // rows
     margin_x = 120
-    margin_y_top = 150
+    margin_y_top = 200  # More space at top for metronome weights to swing
     spacing_x = (W - 2*margin_x) / max(1, cols - 1)
     spacing_y = 160
     xs, ys = [], []
@@ -150,6 +159,7 @@ pg.display.set_caption("Metronomes — 45s, late lock ~40s, no audio")
 # Fonts (fallback to default if not present)
 font  = pg.font.SysFont("Avenir Next, Montserrat, Inter, Helvetica, Arial", 28)
 font2 = pg.font.SysFont("Avenir Next, Montserrat, Inter, Helvetica, Arial", 22)
+font_title = pg.font.SysFont("Avenir Next, Montserrat, Inter, Helvetica, Arial", 36)
 
 # ========= Style helpers =========
 def draw_vertical_gradient(surf, top_color, bottom_color):
@@ -318,12 +328,12 @@ def draw_metronomes(theta, t):
     if fully_locked:
         # all green (with subtle outline)
         for i in range(N):
-            x = xs[i]; y_top = ys[i]
-            aa_line(screen, PIN, (x, y_top-6), (x, y_top+6), 2)
+            x = xs[i]; y_base = ys[i]  # fixed base at bottom
+            aa_line(screen, PIN, (x, y_base-6), (x, y_base+6), 2)
             ang   = ALPHA_MAX * math.sin(float(theta[i]))
-            x_bob = x + A_PIX * math.sin(ang)
-            y_bob = y_top + A_PIX * math.cos(ang)
-            aa_line(screen, HASTE, (x, y_top), (x_bob, y_bob), 3)
+            x_bob = x + A_PIX * math.sin(ang)  # horizontal displacement
+            y_bob = y_base - A_PIX * math.cos(ang)  # weight swings ABOVE base
+            aa_line(screen, HASTE, (x, y_base), (x_bob, y_bob), 3)
             circle_soft(screen, (int(x_bob), int(y_bob)), 8, LOCK_COLOR, outline=1)
         color_state.clear()
         return
@@ -370,43 +380,85 @@ def draw_metronomes(theta, t):
 
     # draw all metronomes (colored if in state, else neutral)
     for i in range(N):
-        x = xs[i]; y_top = ys[i]
-        aa_line(screen, PIN, (x, y_top-6), (x, y_top+6), 2)
+        x = xs[i]; y_base = ys[i]  # fixed base at bottom
+        aa_line(screen, PIN, (x, y_base-6), (x, y_base+6), 2)
         ang   = ALPHA_MAX * math.sin(float(theta[i]))
-        x_bob = x + A_PIX * math.sin(ang)
-        y_bob = y_top + A_PIX * math.cos(ang)
-        aa_line(screen, HASTE, (x, y_top), (x_bob, y_bob), 3)
+        x_bob = x + A_PIX * math.sin(ang)  # horizontal displacement
+        y_bob = y_base - A_PIX * math.cos(ang)  # weight swings ABOVE base
+        aa_line(screen, HASTE, (x, y_base), (x_bob, y_bob), 3)
         col = color_state.get(i, (NEUTRAL_COLOR, 0.0))[0]
         outline_px = 1 if col != NEUTRAL_COLOR else 0
         circle_soft(screen, (int(x_bob), int(y_bob)), 8, col, outline=outline_px)
+
+def wrap_text(font, text, max_width):
+    words = text.split(' ')
+    lines, cur = [], ""
+    for w in words:
+        test = (cur + " " + w).strip()
+        if font.size(test)[0] <= max_width:
+            cur = test
+        else:
+            if cur:
+                lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+    return lines
+
+def caption_box_wrapped(surface, font, full_text, chars_to_show,
+                        box_rgba, y_offset=32, pad=14, max_frac=0.86, line_gap=6):
+    # 1) Wrap full text
+    max_w = int(W * max_frac)
+    lines_all = wrap_text(font, full_text, max_w - 2*pad)
+
+    # 2) Typewriter across wrapped lines
+    shown_lines = []
+    remaining = chars_to_show
+    for ln in lines_all:
+        if remaining <= 0:
+            break
+        if len(ln) <= remaining:
+            shown_lines.append(ln)
+            remaining -= len(ln)
+        else:
+            shown_lines.append(ln[:remaining])
+            remaining = 0
+
+    if not shown_lines:
+        return  # nothing to draw yet
+
+    # 3) Render lines and draw box
+    line_surfs = [font.render(ln, True, TXT) for ln in shown_lines]
+    box_w = min(max_w, max(ls.get_width() for ls in line_surfs) + 2*pad)
+    box_h = sum(ls.get_height() for ls in line_surfs) + (len(line_surfs)-1)*line_gap + 2*pad
+
+    x = (W - box_w)//2
+    y = H - box_h - y_offset
+    s = pg.Surface((box_w, box_h), pg.SRCALPHA)
+    s.fill(box_rgba)
+    surface.blit(s, (x, y))
+
+    cy = y + pad
+    for ls in line_surfs:
+        surface.blit(ls, (x + (box_w - ls.get_width())//2, cy))
+        cy += ls.get_height() + line_gap
 
 def render_caption(t):
     for t_in, t_out, text in NARRA:
         if t_in <= t <= t_out:
             chars = int((t - t_in) * TYPE_CPS)
             chars = max(0, min(len(text), chars))
-            show  = text[:chars]
-            caption_box(screen, font, show, CAPTION_BOX_RGBA, y_offset=32, pad=14)
+            caption_box_wrapped(screen, font, text, chars, CAPTION_BOX_RGBA,
+                                y_offset=40, pad=14, max_frac=0.86, line_gap=6)
             break
 
 def draw_hud(theta, t):
-    re = float(np.mean(np.cos(theta))); im = float(np.mean(np.sin(theta)))
-    r = math.hypot(re, im)
-    if lock_timer < LOCK_HOLD_SEC:
-        # count qualified local groups among ACTIVE metronomes
-        active_mask = (t >= t_start)
-        active_idxs = np.nonzero(active_mask)[0]
-        k = 0
-        if len(active_idxs) > 0:
-            clusters_global = spatial_phase_clusters(active_idxs, theta)
-            for cl in clusters_global:
-                if len(cl) >= MIN_CLUSTER_SIZE and cluster_coherence(theta, cl) >= R_CLUSTER:
-                    k += 1
-        hud = f"t={t:5.1f}s   K(t)={K_eff_at(t):.2f}   r={r:.3f}   local sync groups={k}   N={N}"
-    else:
-        hud = f"t={t:5.1f}s   K(t)={K_eff_at(t):.2f}   r={r:.3f}   N={N}"
-    msg = font2.render(hud, True, ACCENT)
-    screen.blit(msg, (22, 18))
+    # Simple inspirational title instead of scientific metrics
+    title = TITLES[LANG]
+    msg = font_title.render(title, True, TXT)  # White color and larger font
+    # Center the title horizontally
+    x = (W - msg.get_width()) // 2
+    screen.blit(msg, (x, 18))  # Slightly higher position
 
 def draw_credits(t):
     # show credits in the last 4 seconds (top-center)
